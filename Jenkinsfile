@@ -24,7 +24,7 @@ pipeline {
         
         stage ('Stage Analyse de code') {
             steps {
-                bat "./mvnw checkstyle:check"
+                bat "./mvnw checkstyle:checkstyle"
                 recordIssues(tools: [checkStyle(reportEncoding: 'UTF-8')])
             }
         }
