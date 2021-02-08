@@ -74,7 +74,7 @@ class PetTypeFormatterTests {
 	}
 
 	/**
-	 * Helper method to produce some sample pet types just for test purpose
+	 * Helper method to produce some sample pet types just for Jenkinsfile purpose
 	 * @return {@link Collection} of {@link PetType}
 	 */
 	private List<PetType> makePetTypes() {
