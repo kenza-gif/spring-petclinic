@@ -25,7 +25,6 @@ pipeline {
         stage ('Stage Analyse de code') {
             steps {
                 bat "./mvnw checkstyle:checkstyle"
-                recordIssues(tools: [checkStyle(reportEncoding: 'UTF-8')])
             }
         }
         
@@ -37,7 +36,21 @@ pipeline {
         
         stage ('Stage archivage') {
             steps {
-                bat './mvnw deploy -DskipTests'
+                nexusArtifactUploader {
+                    nexusVersion('nexus3')
+                    protocol('http')
+                    nexusUrl('localhost:8081/')
+                    groupId('org.springframework.samples')
+                    version('2.4.2')
+                    repository('NexusArtifactUploader')
+                    credentialsId('d1c2e8a8-318b-4ff5-aa2c-c71b17ba1969')
+                    artifact {
+                        artifactId('spring-petclinic')
+                        type('jar')
+                        classifier('debug')
+                        file('**/target/spring-petclinic-2.4.2.jar')
+                    }
+                }
             }
         }
         
