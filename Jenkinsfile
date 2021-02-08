@@ -36,7 +36,6 @@ pipeline {
         
         stage ('Stage archivage') {
             steps {
-                script {
                     nexusArtifactUploader (
                         nexusVersion: 'nexus3'
                         protocol: 'http'
@@ -52,7 +51,6 @@ pipeline {
                             file: '**/target/spring-petclinic-2.4.2.jar' ]
                         ]
                     )
-                }
             }
         }
         
