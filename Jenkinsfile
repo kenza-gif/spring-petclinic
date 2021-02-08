@@ -47,7 +47,6 @@ pipeline {
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'project-petclinic'
-                    repository: 'NexusArtifactUploader', 
                     version: '2.4.2'
                 }
             }
