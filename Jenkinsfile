@@ -1,27 +1,50 @@
-// Instead of annotating an unnecessary import statement, the symbol _ is annotated, according to the annotation pattern.
-@Library('adop-pluggable-scm-jenkinsfile') _
-
-def repoName = "spring-petclinic"
-def regRepo = "adop-cartridge-java-regression-tests"
-
 pipeline {
-
-        agent any
-        environment{
-            echo " project Info "
-            ENVIRONMENT_NAME = 'CI'
-        }
+    agent any
+    stages {
 
         stage ('SCM checkout') {
-            git credentialsId: 'kenza-gif', url: 'https://github.com/kenza-gif/spring-petclinic.git'
+            steps {
+                git credentialsId: 'kenza-gif', url: 'https://github.com/kenza-gif/spring-petclinic.git'
+            }
         }
 
         stage ('Stage build') {
-            sh "mvn clean build -DskipTests"
+            steps {
+                bat './mvnw clean'
+                bat './mvnw install -DskipTests'
+            }
         }
 
         stage ('Stage Test') {
-            sh "mvn test"
+            steps {
+                bat './mvnw test'
+            }
         }
-
+        
+        stage ('Stage Analyse de code') {
+            steps {
+                bat "./mvnw checkstyle:check"
+                recordIssues(tools: [checkStyle(reportEncoding: 'UTF-8')])
+            }
+        }
+        
+        stage ('Stage package') {
+            steps {
+                bat './mvnw package -DskipTests'
+            }
+        }
+        
+        stage ('Stage archivage') {
+            steps {
+                bat './mvnw deploy -DskipTests'
+            }
+        }
+        
+        stage ('Stage Deploy') {
+            steps {
+                bat './deploy.sh'
+            }
+        }
+        
+    }
 }
