@@ -11,6 +11,7 @@ pipeline {
         stage ('Stage build') {
             steps {
                 bat './mvnw clean'
+                bat 'spring-javaformat:apply'
                 bat './mvnw install -DskipTests'
             }
         }
