@@ -42,6 +42,7 @@ pipeline {
                     ], 
                     credentialsId: '44620c50-1589-4617-a677-7563985e46e1', 
                     groupId: 'sp.sd', 
+                    nexusUser: 'admin',
                     nexusUrl: 'localhost:8081/', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
